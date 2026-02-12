@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
+const apiVersion = require('./middleware/apiVersion');
 
 // load env vars
 dotenv.config();
@@ -19,6 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.json({ msg: 'API is running...' });
 });
+
+// api version header
+app.use(apiVersion);
 
 // routes
 app.use('/api/v1/auth', require('./routes/v1/auth'));
