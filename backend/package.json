@@ -1,0 +1,17 @@
+{
+  "name": "task-api-backend",
+  "version": "1.0.0",
+  "description": "REST API with auth and role based access",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.11"
+  }
+}
