@@ -128,7 +128,7 @@ const Login = () => {
             marginBottom: "32px",
           }}
         >
-          Sign in to continue to TaskFlow
+          Sign in to continue to DevangTaskManager
         </p>
 
         <form onSubmit={handleSubmit}>

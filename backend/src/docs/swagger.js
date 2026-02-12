@@ -4,7 +4,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Task API',
+      title: 'DevangTaskManager API',
       version: '1.0.0',
       description: 'REST API with authentication and role based access control'
     },

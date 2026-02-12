@@ -278,7 +278,7 @@ const Landing = () => {
           color: "var(--text-muted)",
         }}
       >
-        TaskFlow © 2026 — Built with React & Express
+        DevangTaskManager © 2026 — Built with React & Express
       </motion.p>
     </div>
   );

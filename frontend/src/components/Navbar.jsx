@@ -59,7 +59,7 @@ const Navbar = () => {
             WebkitTextFillColor: "transparent",
           }}
         >
-          TaskFlow
+          DevangTaskManager
         </span>
       </Link>
 

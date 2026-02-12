@@ -1,121 +1,146 @@
-# TaskFlow - REST API with Auth & RBAC
+# DevangTaskManager
 
-A full stack task management app with JWT authentication, role based access control, and a React frontend. built for learning and as an assignment project.
+Full-stack task management application with JWT authentication, role-based access control, admin panel support, and a React + Vite frontend.
 
-## tech stack
+## Tech Stack
 
-**Backend:**
+### Backend
 - Node.js + Express
 - MongoDB + Mongoose
-- JWT auth with bcrypt
-- express-validator, helmet, cors, rate-limiting
-- Swagger for API docs
+- JWT auth + bcrypt password hashing
+- express-validator, helmet, cors, express-rate-limit
+- Swagger docs (`/api-docs`)
 
-**Frontend:**
-- React 18 + Vite
-- Tailwind CSS
-- Framer Motion for animations
-- React Router, Axios, React Hot Toast
+### Frontend
+- React + Vite
+- React Router
+- Axios
+- Framer Motion
+- React Hot Toast
 
-## getting started
+## Current Architecture (Updated)
 
-### prereqs
-- Node.js v16+
-- MongoDB running locally (or a cloud URI)
+- Backend routes are versioned under `/api/v1/*`
+- Frontend API clients call `/api/v1` (proxied by Vite to `http://localhost:5000`)
+- Auth flow is centralized in `AuthContext`
+- Task status values are backend-compatible enums:
+  - `todo`
+  - `in-progress`
+  - `done`
 
-### backend setup
+## Project Structure
+
+```txt
+backend/
+  src/
+    config/
+    controllers/
+    docs/
+    middleware/
+    models/
+    routes/v1/
+    utils/
+    server.js
+frontend/
+  src/
+    api/
+    components/
+    context/
+    pages/
+    services/
+    App.jsx
+README.md
+```
+
+## Prerequisites
+
+- Node.js 18+ (recommended)
+- npm
+- MongoDB running locally OR MongoDB Atlas URI
+
+## Environment Setup
+
+In `backend/.env` add:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/taskapi
+JWT_SECRET=your_strong_secret_here
+JWT_EXPIRE=7d
+```
+
+You can copy from `backend/.env.example` and then edit values.
+
+## Installation
+
+### 1) Install backend dependencies
 
 ```bash
 cd backend
-cp .env.example .env
-# edit .env with your mongo URI and jwt secret
 npm install
+```
+
+### 2) Install frontend dependencies
+
+```bash
+cd ../frontend
+npm install
+```
+
+## Run the App
+
+### 1) Start backend
+
+```bash
+cd backend
 npm run dev
 ```
 
-server runs on `http://localhost:5000`  
-swagger docs at `http://localhost:5000/api-docs`
+Backend runs on: `http://localhost:5000`
 
-### frontend setup
+### 2) Start frontend (new terminal)
 
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
 
-frontend runs on `http://localhost:5173` and proxies API calls to the backend
+Frontend runs on: `http://localhost:5173`
 
-## API endpoints
+## API & Routes
 
-| Method | Endpoint | Access | What it does |
-|--------|----------|--------|--------------|
-| POST | /api/v1/auth/register | Public | register new user |
-| POST | /api/v1/auth/login | Public | login, get jwt |
-| GET | /api/v1/auth/me | Auth | get current user |
-| GET | /api/v1/users | Admin | list all users |
-| DELETE | /api/v1/users/:id | Admin | delete a user |
-| GET | /api/v1/tasks | Auth | get my tasks |
-| POST | /api/v1/tasks | Auth | create task |
-| GET | /api/v1/tasks/:id | Auth | get single task |
-| PUT | /api/v1/tasks/:id | Auth | update task |
-| DELETE | /api/v1/tasks/:id | Auth | delete task |
-| GET | /api/v1/tasks/all | Admin | get all tasks |
+### Public Auth
+- `POST /api/v1/auth/register`
+- `POST /api/v1/auth/login`
 
-## project structure
+### Authenticated
+- `GET /api/v1/auth/me`
+- `GET /api/v1/tasks`
+- `POST /api/v1/tasks`
+- `GET /api/v1/tasks/:id`
+- `PUT /api/v1/tasks/:id`
+- `DELETE /api/v1/tasks/:id`
 
-```
-backend/
-├── src/
-│   ├── config/         # db connection
-│   ├── controllers/    # route handlers
-│   ├── docs/           # swagger config
-│   ├── middleware/      # auth, validation, errors
-│   ├── models/         # mongoose schemas
-│   ├── routes/v1/      # api routes
-│   ├── utils/          # helpers, validators
-│   └── server.js
-frontend/
-├── src/
-│   ├── api/            # axios instance
-│   ├── components/     # reusable components
-│   ├── context/        # auth context
-│   ├── pages/          # page components
-│   └── App.jsx
-```
+### Admin Only
+- `GET /api/v1/users`
+- `DELETE /api/v1/users/:id`
+- `GET /api/v1/tasks/all`
 
-## security stuff
+Swagger docs: `http://localhost:5000/api-docs`
 
-- passwords hashed with bcrypt (salt rounds 10)
-- JWT tokens for stateless auth
-- role based access control (user vs admin)
-- helmet for HTTP headers
-- CORS enabled
-- rate limiting on API routes (100 req per 15min)
-- input validation with express-validator
-- request body size limited to 10kb
+## How To Use
 
-## scalability notes
+1. Register a user account from the frontend.
+2. Login with your credentials.
+3. Create, update, and delete your tasks from Dashboard.
+4. If logged in as admin, open Admin page to manage users and view all tasks.
 
-this project is built with scalability in mind even tho its a small app right now:
+## Notes
 
-- **Modular structure** - easy to add new entities/routes without touching existing code. just create a new model, controller, route file and plug it in
-- **API versioning** - routes are under `/api/v1/` so we can add v2 later without breaking existing clients
-- **Stateless JWT** - no server side sessions means the app can be horizontally scaled behind a load balancer easily
-- **Can add Redis** - for token blacklisting (logout), caching frequently accessed data, and session management if needed later
-- **Docker ready** - the project structure is clean enough to containerize both frontend and backend services
-- **Microservices potential** - auth service and task service could be split into separate deployments when traffic grows
-- **Rate limiting** - already in place to prevent abuse and DOS attacks
-- **Database indexing** - mongoose unique index on email, can add more indexes as queries grow
+- If auth state looks stale after changes, restart both frontend and backend servers.
+- If token expires or is invalid, frontend redirects to `/login`.
+- Ensure MongoDB is reachable before starting backend.
 
-for a production deployment youd probably want:
-- nginx reverse proxy
-- docker compose for the whole stack
-- CI/CD pipeline (github actions)
-- environment specific configs
-- logging service (winston + ELK or similar)
-- monitoring (prometheus + grafana)
-
-## license
+## License
 
 ISC

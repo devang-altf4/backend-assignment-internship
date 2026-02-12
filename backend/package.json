@@ -1,7 +1,7 @@
 {
-  "name": "task-api-backend",
+  "name": "devangtaskmanager-backend",
   "version": "1.0.0",
-  "description": "REST API with auth and role based access",
+  "description": "DevangTaskManager backend API with auth and role based access",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
