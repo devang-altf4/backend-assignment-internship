@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorHandler');
 const apiVersion = require('./middleware/apiVersion');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./docs/swagger');
 
 // load env vars
 dotenv.config();
@@ -23,6 +25,9 @@ app.get('/', (req, res) => {
 
 // api version header
 app.use(apiVersion);
+
+// swagger docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // routes
 app.use('/api/v1/auth', require('./routes/v1/auth'));
