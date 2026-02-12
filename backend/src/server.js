@@ -5,6 +5,10 @@ const errorHandler = require('./middleware/errorHandler');
 const apiVersion = require('./middleware/apiVersion');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./docs/swagger');
+const helmet = require('helmet');
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+const morgan = require('morgan');
 
 // load env vars
 dotenv.config();
@@ -14,8 +18,20 @@ connectDB();
 
 const app = express();
 
+// security middlewares
+app.use(helmet());
+app.use(cors());
+app.use(morgan('dev'));
+
+// rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 mins
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use('/api', limiter);
+
 // body parser
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // basic health check
