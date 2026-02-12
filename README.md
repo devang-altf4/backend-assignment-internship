@@ -107,6 +107,22 @@ npm run dev
 
 Frontend runs on: `http://localhost:5173`
 
+## Seed Dummy Tasks (Todo/Ongoing/Completed)
+
+To insert 3 CRUD-ready dummy tasks for each user (if missing):
+
+```bash
+cd backend
+npm run seed:dummy
+```
+
+This adds:
+- Need to bathe my cat (`todo`)
+- Need to cut my hair (`in-progress`)
+- Finished attending meeting (`done`)
+
+These tasks are normal DB records and can be created/read/updated/deleted from the Dashboard.
+
 ## API & Routes
 
 ### Public Auth
