@@ -1,95 +1,285 @@
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { HiCheckCircle, HiShieldCheck, HiLightningBolt } from 'react-icons/hi';
+import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  HiOutlineClipboardDocumentCheck,
+  HiOutlineShieldCheck,
+  HiOutlineBolt,
+  HiOutlineArrowRight,
+  HiOutlineSparkles,
+} from "react-icons/hi2";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.15, ease: [0.25, 0.46, 0.45, 0.94] },
+  }),
+};
 
 const features = [
   {
-    icon: <HiCheckCircle className="text-3xl text-purple-400" />,
-    title: 'Task Management',
-    desc: 'Create, update and track your tasks with ease'
+    icon: <HiOutlineClipboardDocumentCheck size={28} />,
+    title: "Task Management",
+    desc: "Create, update, and track your tasks with an intuitive interface",
+    color: "#6c5ce7",
   },
   {
-    icon: <HiShieldCheck className="text-3xl text-green-400" />,
-    title: 'Secure Auth',
-    desc: 'JWT based authentication with role based access'
+    icon: <HiOutlineShieldCheck size={28} />,
+    title: "Secure Auth",
+    desc: "JWT-based authentication with role-based access control",
+    color: "#00cec9",
   },
   {
-    icon: <HiLightningBolt className="text-3xl text-yellow-400" />,
-    title: 'Fast & Scalable',
-    desc: 'Built with modern tech stack for performance'
-  }
+    icon: <HiOutlineBolt size={28} />,
+    title: "Fast & Scalable",
+    desc: "Built with modern tech stack for blazing performance",
+    color: "#fdcb6e",
+  },
 ];
 
 const Landing = () => {
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="max-w-7xl mx-auto px-4 py-20 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="text-5xl md:text-7xl font-bold mb-6"
-        >
-          Manage Tasks
-          <span className="text-purple-400"> Effortlessly</span>
-        </motion.h1>
+    <div
+      style={{
+        minHeight: "calc(100vh - 65px)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "60px 24px 40px",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Background glow effects */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-200px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "800px",
+          height: "600px",
+          background:
+            "radial-gradient(circle, rgba(108,92,231,0.12) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "-100px",
+          right: "-100px",
+          width: "400px",
+          height: "400px",
+          background:
+            "radial-gradient(circle, rgba(0,206,201,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto"
-        >
-          A simple and powerful task management app with secure authentication
-          and role based access control. Built for teams and individuals.
-        </motion.p>
+      {/* Badge */}
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        custom={0}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          padding: "8px 18px",
+          borderRadius: "var(--radius-xl)",
+          background: "rgba(108, 92, 231, 0.1)",
+          border: "1px solid rgba(108, 92, 231, 0.2)",
+          marginBottom: "28px",
+          fontSize: "0.85rem",
+          fontWeight: 500,
+          color: "var(--accent-primary-light)",
+        }}
+      >
+        <HiOutlineSparkles size={16} />
+        Simple. Powerful. Beautiful.
+      </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="flex gap-4 justify-center flex-wrap"
+      {/* Hero heading */}
+      <motion.h1
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        custom={1}
+        style={{
+          fontFamily: "var(--font-display)",
+          fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+          fontWeight: 800,
+          textAlign: "center",
+          lineHeight: 1.1,
+          marginBottom: "20px",
+          maxWidth: "700px",
+        }}
+      >
+        Manage Tasks{" "}
+        <span
+          style={{
+            background: "var(--gradient-hero)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
         >
-          <Link
-            to="/register"
-            className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-xl text-lg font-medium transition transform hover:scale-105"
+          Effortlessly
+        </span>
+      </motion.h1>
+
+      {/* Subtitle */}
+      <motion.p
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        custom={2}
+        style={{
+          fontSize: "1.1rem",
+          color: "var(--text-secondary)",
+          textAlign: "center",
+          maxWidth: "520px",
+          lineHeight: 1.7,
+          marginBottom: "40px",
+        }}
+      >
+        A simple and powerful task management app with secure authentication
+        and role-based access control. Built for teams and individuals.
+      </motion.p>
+
+      {/* CTA Buttons */}
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        custom={3}
+        style={{ display: "flex", gap: "16px", marginBottom: "80px" }}
+      >
+        <Link to="/register">
+          <motion.button
+            whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(108,92,231,0.4)" }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "14px 32px",
+              borderRadius: "var(--radius-xl)",
+              background: "var(--gradient-primary)",
+              color: "#fff",
+              fontSize: "1rem",
+              fontWeight: 600,
+              border: "none",
+            }}
           >
             Get Started
-          </Link>
-          <Link
-            to="/login"
-            className="border border-slate-600 hover:border-slate-400 text-slate-300 px-8 py-3 rounded-xl text-lg font-medium transition transform hover:scale-105"
+            <HiOutlineArrowRight size={18} />
+          </motion.button>
+        </Link>
+        <Link to="/login">
+          <motion.button
+            whileHover={{ scale: 1.05, background: "rgba(108,92,231,0.15)" }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              padding: "14px 32px",
+              borderRadius: "var(--radius-xl)",
+              background: "rgba(108,92,231,0.08)",
+              color: "var(--text-primary)",
+              fontSize: "1rem",
+              fontWeight: 600,
+              border: "1px solid var(--border-color)",
+            }}
           >
             Login
-          </Link>
-        </motion.div>
-      </section>
+          </motion.button>
+        </Link>
+      </motion.div>
 
-      {/* Features */}
-      <section className="max-w-5xl mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-3 gap-8">
-          {features.map((feature, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 + i * 0.2 }}
-              whileHover={{ y: -5 }}
-              className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 text-center hover:border-purple-500/50 transition"
+      {/* Feature Cards */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: "20px",
+          maxWidth: "900px",
+          width: "100%",
+        }}
+      >
+        {features.map((f, i) => (
+          <motion.div
+            key={f.title}
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={4 + i}
+            whileHover={{ y: -6, boxShadow: `0 12px 40px ${f.color}15` }}
+            style={{
+              padding: "32px 28px",
+              borderRadius: "var(--radius-lg)",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
+              textAlign: "center",
+              transition: "border-color 0.3s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = f.color + "40")}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "var(--border-color)")}
+          >
+            <div
+              style={{
+                width: 52,
+                height: 52,
+                borderRadius: "var(--radius-md)",
+                background: f.color + "15",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 16px",
+                color: f.color,
+              }}
             >
-              <div className="flex justify-center mb-4">{feature.icon}</div>
-              <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-slate-400 text-sm">{feature.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+              {f.icon}
+            </div>
+            <h3
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "1.1rem",
+                fontWeight: 600,
+                marginBottom: "8px",
+              }}
+            >
+              {f.title}
+            </h3>
+            <p
+              style={{
+                fontSize: "0.9rem",
+                color: "var(--text-secondary)",
+                lineHeight: 1.6,
+              }}
+            >
+              {f.desc}
+            </p>
+          </motion.div>
+        ))}
+      </div>
 
       {/* Footer */}
-      <footer className="text-center py-8 text-slate-500 text-sm border-t border-slate-800">
-        TaskFlow &copy; {new Date().getFullYear()} — Built with React & Express
-      </footer>
+      <motion.p
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        custom={7}
+        style={{
+          marginTop: "60px",
+          fontSize: "0.8rem",
+          color: "var(--text-muted)",
+        }}
+      >
+        TaskFlow © 2026 — Built with React & Express
+      </motion.p>
     </div>
   );
 };
