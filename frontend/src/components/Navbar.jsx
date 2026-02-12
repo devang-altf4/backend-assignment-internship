@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { motion } from "framer-motion";
-import { HiOutlineSparkles } from "react-icons/hi2";
 import toast from "react-hot-toast";
 
 const Navbar = () => {
@@ -35,19 +34,23 @@ const Navbar = () => {
     >
       <Link to="/" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <motion.div
-          whileHover={{ rotate: 180 }}
+          whileHover={{ scale: 1.08 }}
           transition={{ duration: 0.4 }}
           style={{
-            width: 32,
-            height: 32,
+            width: 48,
+            height: 48,
             borderRadius: "var(--radius-sm)",
-            background: "var(--gradient-primary)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            overflow: "hidden",
           }}
         >
-          <HiOutlineSparkles size={18} color="#fff" />
+          <img
+            src="/taskmanager%20logo.png"
+            alt="DevangTaskManager logo"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
         </motion.div>
         <span
           style={{
