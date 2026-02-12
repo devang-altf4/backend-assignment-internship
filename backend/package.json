@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "seed:dummy": "node src/scripts/seedDummyTasks.js"
+    "seed:dummy": "node src/scripts/seedDummyTasks.js",
+    "seed:admin": "node src/scripts/seedAdminUser.js"
   },
   "keywords": [],
   "author": "",

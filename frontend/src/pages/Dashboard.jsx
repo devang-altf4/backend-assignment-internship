@@ -50,6 +50,10 @@ const Dashboard = () => {
   const [form, setForm] = useState({ title: "", description: "", status: "todo" });
 
   const fetchTasks = async () => {
+    if (!user) {
+      setTasks([]);
+      return;
+    }
     try {
       const res = await API.get("/tasks");
       const fetchedTasks = (res?.data?.data || []).map((task) => ({
@@ -61,7 +65,7 @@ const Dashboard = () => {
       toast.error(err?.response?.data?.error || err?.response?.data?.message || "Failed to fetch tasks");
     }
   };
-  useEffect(() => { fetchTasks(); }, []);
+  useEffect(() => { fetchTasks(); }, [user]);
 
   const filtered = filter === "all" ? tasks : tasks.filter((t) => t.status === filter);
   const stats = {
@@ -72,11 +76,19 @@ const Dashboard = () => {
   };
 
   const openCreate = () => {
+    if (!user) {
+      toast.error("Please login to create tasks");
+      return;
+    }
     setEditTask(null);
     setForm({ title: "", description: "", status: "todo" });
     setShowModal(true);
   };
   const openEdit = (t) => {
+    if (!user) {
+      toast.error("Please login to edit tasks");
+      return;
+    }
     setEditTask(t);
     setForm({ title: t.title, description: t.description || "", status: normalizeStatus(t.status) });
     setShowModal(true);
@@ -84,6 +96,10 @@ const Dashboard = () => {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("Please login to manage tasks");
+      return;
+    }
     try {
       if (editTask) {
         await API.put(`/tasks/${editTask._id}`, form);
@@ -100,6 +116,10 @@ const Dashboard = () => {
   };
 
   const handleDelete = async (id) => {
+    if (!user) {
+      toast.error("Please login to delete tasks");
+      return;
+    }
     if (!confirm("Delete this task?")) return;
     try {
       await API.delete(`/tasks/${id}`);
@@ -126,7 +146,13 @@ const Dashboard = () => {
             Dashboard
           </h1>
           <p style={{ color: "var(--text-secondary)", fontSize: "0.95rem" }}>
-            Welcome back, <span style={{ color: "var(--accent-primary-light)", fontWeight: 600 }}>{user?.name}</span>. Here's what's happening today.
+            {user ? (
+              <>
+                Welcome back, <span style={{ color: "var(--accent-primary-light)", fontWeight: 600 }}>{user.name}</span>. Here's what's happening today.
+              </>
+            ) : (
+              <>Welcome to DevangTaskManager. Manage your tasks efficiently.</>
+            )}
           </p>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--text-muted)", fontSize: "0.85rem" }}>

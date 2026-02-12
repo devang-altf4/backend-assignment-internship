@@ -18,7 +18,11 @@ API.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      if (!window.location.pathname.includes("/login") && !window.location.pathname.includes("/register")) {
+      if (
+        !window.location.pathname.includes("/login") &&
+        !window.location.pathname.includes("/register") &&
+        !window.location.pathname.includes("/admin-login")
+      ) {
         window.location.href = "/login";
       }
     }

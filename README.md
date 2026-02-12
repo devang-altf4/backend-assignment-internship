@@ -107,6 +107,38 @@ npm run dev
 
 Frontend runs on: `http://localhost:5173`
 
+## Seed Admin User
+
+To create/update the default admin account:
+
+```bash
+cd backend
+npm run seed:admin
+```
+
+Seeded admin credentials:
+- Email: `admin@gmail.com`
+- Password: `admin123`
+
+## Admin Access
+
+### Admin login details
+- Email: `admin@gmail.com`
+- Password: `admin123`
+
+### How to access admin panel
+1. Start backend and frontend servers.
+2. Run admin seed once:
+
+```bash
+cd backend
+npm run seed:admin
+```
+
+3. Open: `http://localhost:5173/admin`
+4. If not logged in as admin, app redirects to: `http://localhost:5173/admin-login`
+5. Login with admin credentials above.
+
 ## Seed Dummy Tasks (Todo/Ongoing/Completed)
 
 To insert 3 CRUD-ready dummy tasks for each user (if missing):
@@ -146,10 +178,10 @@ Swagger docs: `http://localhost:5000/api-docs`
 
 ## How To Use
 
-1. Register a user account from the frontend.
-2. Login with your credentials.
-3. Create, update, and delete your tasks from Dashboard.
-4. If logged in as admin, open Admin page to manage users and view all tasks.
+1. Open the app at `http://localhost:5173` (Dashboard is the landing page).
+2. Login or Sign Up to perform task CRUD operations.
+3. For admin access, open `http://localhost:5173/admin` (you will be redirected to `/admin-login` if not authenticated as admin).
+4. Use seeded admin credentials (`admin@gmail.com` / `admin123`) after running `npm run seed:admin`.
 
 ## Notes
 

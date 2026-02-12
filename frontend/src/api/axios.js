@@ -21,7 +21,11 @@ API.interceptors.response.use(
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       // only redirect if not already on auth pages
-      if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/register')) {
+      if (
+        !window.location.pathname.includes('/login') &&
+        !window.location.pathname.includes('/register') &&
+        !window.location.pathname.includes('/admin-login')
+      ) {
         window.location.href = '/login';
       }
     }
