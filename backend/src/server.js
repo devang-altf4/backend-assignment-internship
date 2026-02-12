@@ -19,6 +19,9 @@ app.get('/', (req, res) => {
   res.json({ msg: 'API is running...' });
 });
 
+// routes
+app.use('/api/v1/auth', require('./routes/v1/auth'));
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
