@@ -10,16 +10,18 @@ const {
 } = require('../../controllers/taskController');
 const { protect } = require('../../middleware/auth');
 const { authorize } = require('../../middleware/roleCheck');
+const validate = require('../../middleware/validate');
+const { taskValidation, taskUpdateValidation } = require('../../utils/validators');
 
 router.route('/')
   .get(protect, getTasks)
-  .post(protect, createTask);
+  .post(protect, taskValidation, validate, createTask);
 
 router.get('/all', protect, authorize('admin'), getAllTasks);
 
 router.route('/:id')
   .get(protect, getTask)
-  .put(protect, updateTask)
+  .put(protect, taskUpdateValidation, validate, updateTask)
   .delete(protect, deleteTask);
 
 module.exports = router;
